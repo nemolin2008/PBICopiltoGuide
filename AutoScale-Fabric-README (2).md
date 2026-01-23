@@ -32,13 +32,13 @@ Guide: https://learn.microsoft.com/fabric/real-time-hub/create-eventstream
 Configure the event stream to include capacity overview data.
 For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-capacity-overview-event-source
 
-Steps:
+#### Steps:
 
 1. Select **Capacity Overview Events** → **Connect**  
 ![alt text](image-2.png)
 2. To capture capacity utilization, select the event type `Microsoft.Fabric.Capacity.Summary` and choose the specific capacity you want to monitor.
 
-![alt text](image-3.png)
+    ![alt text](image-3.png)
 
 3. Rename the source to **Fabric-capacity-events**
 ![alt text](image-4.png)
@@ -113,18 +113,16 @@ Next, navigate to the Activator details page and click Open item to configure th
 ![alt text](image-11.png)
 
 - Create a new object - Click New Object and provide the following details:
-Object Name: Fabric Capacity
-Unique Identifier: capacityName
-Properties: utilization
+    - Object Name: Fabric Capacity
+    - Unique Identifier: capacityName
+    - Properties: utilization
 
-![alt text](image-12.png)
+    ![alt text](image-12.png)
 
 - Create a new rule based on the property utilization
-
 ![alt text](image-13.png)
 
 - In the rule’s Definition panel, click Add Summarization → Average
-
 ![alt text](image-14.png)
 
 - Configure the rule for the utilization property:
@@ -139,6 +137,7 @@ Note on actions: Each Activator rule supports one action type per rule.
 - If you need extra actions (e.g., send a Teams message or email when the scale up completes), either: 
     - Use Power Automate as the custom action to orchestrate multiple downstream actions from a single trigger, or
     - Send the notification from your Python notebook via email or teams message after the capacity is successfully scaled.
+
 Note: This sample does not include a scale-down operation because excess capacity has no immediate impact on Fabric performance, so scaling down can typically be managed manually. If you want to implement scale-down using this approach, you’ll need to:
     - Create a separate rule to trigger the scale down action.
     - Develop a dedicated notebook for executing the scale-down process
