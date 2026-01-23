@@ -55,7 +55,7 @@ Add an Activator as a destination in the event stream and name it Capacity-Activ
 
 The stream now flows as shown below. Since the event type Microsoft.Fabric.Capacity.Summary does not include a utilization metric, we need to generate a new metric and output the result to the Activator
 
-    ![alt text](image-7.png)
+![alt text](image-7.png)
 
 Click the edit icon for the SQL code and enter the following SQL script
 
