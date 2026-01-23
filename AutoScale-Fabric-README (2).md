@@ -22,13 +22,13 @@ For more information about event schema, refer to [Explore Capacity overview eve
     Configure Activator to monitor incoming utilization events and launch a notebook to scale up capacity when the defined rule is triggered.
     Reference: https://learn.microsoft.com/fabric/real-time-hub/activator 
 
-# Step‑by‑Step Implementation
+## Step‑by‑Step Implementation
 
-## 1. Create Eventstream  
+### 1. Create Eventstream  
 Set up an event stream named appropriately for your scenario.
 Guide: https://learn.microsoft.com/fabric/real-time-hub/create-eventstream
 ![alt text](image-1.png)
-## 2. Add Capacity Overview Event Source
+### 2. Add Capacity Overview Event Source
 Configure the event stream to include capacity overview data.
 For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-capacity-overview-event-source
 
@@ -48,10 +48,10 @@ Steps:
 
 5. Create a new Activator if one does not already exist.For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination 
 
-## 3. Add Capacity Overview Event Source
+### 3. Add Capacity Overview Event Source
 Add an Activator as a destination in the event stream and name it Capacity-Activator. Create a new Activator if one does not already exist. For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination
 ![alt text](image-6.png)
-## 4. Edit SQL transformation code
+### 4. Edit SQL transformation code
 
 The stream now flows as shown below. Since the event type Microsoft.Fabric.Capacity.Summary does not include a utilization metric, we need to generate a new metric and output the result to the Activator
 
@@ -102,12 +102,12 @@ utilization = capacityUnitMs / (baseCapacityUnits * windowDurationMs)
 ```
 - Writes the computed results to [Capacity-Activator], which is used to trigger automation actions.
 
-## 5. Publish the Eventstream
+### 5. Publish the Eventstream
 After saving the query, the stream flow will appear as shown below. At this point, we are ready to publish the Eventstream
 ![alt text](image-9.png) 
 Once the Eventstream is published, both the source and destination will display the status as “Active.”
 ![alt text](image-10.png)
-## 6. Configure the Activator
+### 6. Configure the Activator
 Next, navigate to the Activator details page and click Open item to configure the activation settings. Typically, we avoid scaling up capacity immediately when utilization exceeds the threshold. Instead, best practice is to allow a time window—such as 10 minutes—to confirm whether utilization remains above the threshold. To achieve this, define a summarization rule on the utilization property
 
 ![alt text](image-11.png)
@@ -133,7 +133,7 @@ Properties: utilization
     - Action: Execute the notebook scale_up_by_api to scale Fabric capacity to the next SKU
 ![alt text](image-15.png)
 - Click Save and Start to activate the rule. Once enabled, the rule will continuously monitor Fabric capacity utilization and, when the alert condition is met, automatically scale the capacity to the next SKU by running the designated notebook
-## 7. Use Fabric REST API to Scale Up the SKU
+### 7. Use Fabric REST API to Scale Up the SKU
 Below is a sample approach for using the Fabric REST API to scale a Fabric capacity to the next SKU.
 Note on actions: Each Activator rule supports one action type per rule.
 - If you need extra actions (e.g., send a Teams message or email when the scale up completes), either: 
@@ -143,7 +143,7 @@ Note: This sample does not include a scale-down operation because excess capacit
     - Create a separate rule to trigger the scale down action.
     - Develop a dedicated notebook for executing the scale-down process
 
-## Full Notebook Code
+### Full Notebook Code
 ```
 # Fabric Notebook - Scale Fabric capacity via ARM using SP secret from Key Vault
 import os
