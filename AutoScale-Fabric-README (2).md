@@ -1,20 +1,57 @@
 # Auto-scale Fabric capacity based on utilization
 
-![Architecture Diagram](diagram-architecture.png)
-
 Organizations often face unpredictable, spiky analytics workloads that can lead to throttling and degraded performance when capacity becomes saturated. Since Microsoft Fabric does not provide built-in autoscale functionality today, this demo introduces an approach to dynamically scale capacity on demand—ensuring consistent performance while controlling costs and avoiding permanent over‑provisioning
 The sample demonstrates how to monitor real-time capacity usage and automatically trigger a scale-up action when utilization exceeds defined thresholds. It also calls a notebook to execute additional logic. The accompanying diagram illustrates how the solution ingests capacity signals, processes them, and launches a notebook via Activator within an Eventstream in Real-Time Intelligence (RTI).
 ![alt text](image.png)
 
 ## Utilization Formula
+The concept is to calculate utilization using the following formula. Users can then define an alert rule based on this utilization value to trigger a notebook that scales up
 ```
 utilization = capacityUnitMs / (baseCapacityUnits * windowDurationMs)
 ```
+For more information about event schema, refer to [Explore Capacity overview events](https://learn.microsoft.com/en-us/fabric/real-time-hub/explore-fabric-capacity-overview-events).
 
 ## Key Components
 - Capture capacity data
+    Retrieve capacity metrics from Fabric Capacity Overview events.
+    Reference: https://learn.microsoft.com/fabric/real-time-hub/capacity-overview-events 
 - Process events via SQL
+    Use a SQL operator to process incoming events and calculate capacity utilization, then output the result to Activator.
+    Reference: https://learn.microsoft.com/fabric/real-time-hub/sql-operator 
 - Trigger actions via Activator
+    Configure Activator to monitor incoming utilization events and launch a notebook to scale up capacity when the defined rule is triggered.
+    Reference: https://learn.microsoft.com/fabric/real-time-hub/activator 
+
+# Step‑by‑Step Implementation
+
+## 1. Create Eventstream  
+Set up an event stream named appropriately for your scenario.
+Guide: https://learn.microsoft.com/fabric/real-time-hub/create-eventstream
+![alt text](image-1.png)
+## 2. Add Capacity Overview Event Source
+Configure the event stream to include capacity overview data.
+For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-capacity-overview-event-source
+
+Steps:
+
+1. Select **Capacity Overview Events** → **Connect**  
+![alt text](image-2.png)
+2. To capture capacity utilization, select the event type `Microsoft.Fabric.Capacity.Summary` and choose the specific capacity you want to monitor.
+![alt text](image-3.png)
+3. Rename the source to **Fabric-capacity-events**
+![alt text](image-4.png)
+4. Add the SQL transformation code to the event stream and name it Calculate_capacity_utilization. For detailed guidance, refer to: https://learn.microsoft.com/fabric/real-time-hub/sql-operator
+![alt text](image-5.png)
+5. Create a new Activator if one does not already exist.For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination 
+
+## 3. Add Capacity Overview Event Source
+Add an Activator as a destination in the event stream and name it Capacity-Activator. Create a new Activator if one does not already exist. For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination
+![alt text](image-6.png)
+## 4. Edit SQL transformation code
+The stream now flows as shown below. Since the event type Microsoft.Fabric.Capacity.Summary does not include a utilization metric, we need to generate a new metric and output the result to the Activato
+![alt text](image-7.png)
+Click the edit icon for the SQL code and enter the following SQL script
+---
 
 ## SQL Script
 ```
@@ -49,6 +86,11 @@ SELECT
 INTO [Capacity-Activator]
 FROM u;
 ```
+![alt text](image-8.png)
+
+
+
+
 
 ## Full Notebook Code
 ```
