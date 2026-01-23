@@ -50,12 +50,12 @@ For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/a
 
 ### 3. Add Capacity Overview Event Source
 Add an Activator as a destination in the event stream and name it Capacity-Activator. Create a new Activator if one does not already exist. For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination
-![alt text](image-6.png)
+    ![alt text](image-6.png)
 ### 4. Edit SQL transformation code
 
 The stream now flows as shown below. Since the event type Microsoft.Fabric.Capacity.Summary does not include a utilization metric, we need to generate a new metric and output the result to the Activator
 
-![alt text](image-7.png)
+    ![alt text](image-7.png)
 
 Click the edit icon for the SQL code and enter the following SQL script
 
@@ -120,10 +120,12 @@ Next, navigate to the Activator details page and click Open item to configure th
     ![alt text](image-12.png)
 
 - Create a new rule based on the property utilization
-![alt text](image-13.png)
+
+    ![alt text](image-13.png)
 
 - In the rule’s Definition panel, click Add Summarization → Average
-![alt text](image-14.png)
+
+    ![alt text](image-14.png)
 
 - Configure the rule for the utilization property:
     - Summarization: Average over a 10-minute window
@@ -139,8 +141,8 @@ Note on actions: Each Activator rule supports one action type per rule.
     - Send the notification from your Python notebook via email or teams message after the capacity is successfully scaled.
 
 Note: This sample does not include a scale-down operation because excess capacity has no immediate impact on Fabric performance, so scaling down can typically be managed manually. If you want to implement scale-down using this approach, you’ll need to:
-    - Create a separate rule to trigger the scale down action.
-    - Develop a dedicated notebook for executing the scale-down process
+   - Create a separate rule to trigger the scale down action.
+   - Develop a dedicated notebook for executing the scale-down process
 
 ### Full Notebook Code
 ```
