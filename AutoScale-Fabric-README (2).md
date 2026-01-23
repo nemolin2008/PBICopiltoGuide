@@ -4,7 +4,7 @@
 
 Organizations often face unpredictable, spiky analytics workloads that can lead to throttling and degraded performance when capacity becomes saturated. Since Microsoft Fabric does not provide built-in autoscale functionality today, this demo introduces an approach to dynamically scale capacity on demand—ensuring consistent performance while controlling costs and avoiding permanent over‑provisioning
 The sample demonstrates how to monitor real-time capacity usage and automatically trigger a scale-up action when utilization exceeds defined thresholds. It also calls a notebook to execute additional logic. The accompanying diagram illustrates how the solution ingests capacity signals, processes them, and launches a notebook via Activator within an Eventstream in Real-Time Intelligence (RTI).
-![alt text](image-1.png)
+![alt text](image.png)
 
 ## Utilization Formula
 ```
@@ -145,3 +145,6 @@ if __name__ == "__main__":
     except Exception as e:
         print("Scale failed:", e)
 ```
+
+
+[def]: image-2.png
