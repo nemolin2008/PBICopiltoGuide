@@ -1,11 +1,12 @@
 # Auto-scale Fabric capacity based on utilization
 
 Organizations often face unpredictable, spiky analytics workloads that can lead to throttling and degraded performance when capacity becomes saturated. Since Microsoft Fabric does not provide built-in autoscale functionality today, this demo introduces an approach to dynamically scale capacity on demand—ensuring consistent performance while controlling costs and avoiding permanent over‑provisioning
+
 The sample demonstrates how to monitor real-time capacity usage and automatically trigger a scale-up action when utilization exceeds defined thresholds. It also calls a notebook to execute additional logic. The accompanying diagram illustrates how the solution ingests capacity signals, processes them, and launches a notebook via Activator within an Eventstream in Real-Time Intelligence (RTI).
 ![alt text](image.png)
 
 ## Utilization Formula
-The concept is to calculate utilization using the following formula. Users can then define an alert rule based on this utilization value to trigger a notebook that scales up
+The concept is to calculate utilization using the following formula. Users can then define an alert rule based on this utilization value to trigger a notebook that scales up capacity:
 ```
 utilization = capacityUnitMs / (baseCapacityUnits * windowDurationMs)
 ```
@@ -45,8 +46,6 @@ For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/a
 
 4. Add the SQL transformation code to the event stream and name it Calculate_capacity_utilization. For detailed guidance, refer to: https://learn.microsoft.com/fabric/real-time-hub/sql-operator
 ![alt text](image-5.png)
-
-5. Create a new Activator if one does not already exist.For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination 
 
 ### 3. Add Capacity Overview Event Source
 Add an Activator as a destination in the event stream and name it Capacity-Activator. Create a new Activator if one does not already exist. For detailed steps, refer to: https://learn.microsoft.com/fabric/real-time-hub/add-activator-destination
