@@ -112,9 +112,9 @@ Next, navigate to the Activator details page and click Open item to configure th
 ![alt text](image-11.png)
 
 - Create a new object - Click New Object and provide the following details:
-    - Object Name: Fabric Capacity
-    - Unique Identifier: capacityName
-    - Properties: utilization
+    - **Object Name**: Fabric Capacity
+    - **Unique Identifier**: capacityName
+    - **Properties**: utilization
 
     ![alt text](image-12.png)
 
@@ -127,9 +127,9 @@ Next, navigate to the Activator details page and click Open item to configure th
     ![alt text](image-14.png)
 
 - Configure the rule for the utilization property:
-    - Summarization: Average over a 10-minute window
-    - Condition: Trigger when utilization remains greater than 0.8 for 10 minutes
-    - Action: Execute the notebook scale_up_by_api to scale Fabric capacity to the next SKU
+    - **Summarization**: Average over a 10-minute window
+    - **Condition**: Trigger when utilization remains greater than 0.8 for 10 minutes
+    - **Action**: Execute the notebook scale_up_by_api to scale Fabric capacity to the next SKU
 ![alt text](image-15.png)
 - Click Save and Start to activate the rule. Once enabled, the rule will continuously monitor Fabric capacity utilization and, when the alert condition is met, automatically scale the capacity to the next SKU by running the designated notebook
 ### 7. Use Fabric REST API to Scale Up the SKU
